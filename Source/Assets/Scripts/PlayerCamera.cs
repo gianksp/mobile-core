@@ -20,7 +20,7 @@ public class PlayerCamera : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (target){
+		if (target != null){
 			// Calculate the current rotation angles
 			float wantedRotationAngle = target.eulerAngles.y;
 			float wantedHeight = target.position.y + height;
@@ -48,12 +48,17 @@ public class PlayerCamera : MonoBehaviour {
 			
 			// Always look at the target
 			transform.LookAt (target);
+		} else {
+			GameObject obj = GameObject.FindWithTag("Player");
+			if (obj)
+				target = obj.transform;
 		}
 	}
 
 	//Render information about trip
 	void OnGUI () {
 
+		if (target)
 		GUI.Label (new Rect (10,10,200,20),"Distance :"+Mathf.Round(target.position.z)+" meters");
 	}
 	
